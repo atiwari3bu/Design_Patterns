@@ -1,8 +1,11 @@
 #ifndef __LOGGER_HPP__
 #define __LOGGER_HPP__
+
 #include<string>
 #include<iostream>
 #include<unordered_map>
+#include<vector>
+
 
 enum log_level{
     FATAL,
@@ -31,9 +34,27 @@ class Singleton_Logger{
     template<typename T,typename... Ts>
         void printOnScreen(T first, Ts... rest);
 
+    template<typename T,typename... Ts>
+        void print(log_level print_level,T first, Ts... rest); 
+
 };
 
 Singleton_Logger* Singleton_Logger::_Instance=nullptr;
+
+std::ostream& operator<<(std::ostream& os,const log_level& value){
+    static std::unordered_map<log_level,std::string> mp;
+
+    if(mp.size()==0){
+        mp[FATAL]="FATAL";
+        mp[ERROR]="ERROR";
+        mp[WARNING]="WARNING";
+        mp[INFO]="INFO";
+        mp[DEBUG]="DEBUG";
+    }
+
+    os<<mp[value];
+    return os;
+}
 
 template<typename T> // operator overloading for vector
 std::ostream& operator <<(std::ostream& os,const std::vector<T>& v){ 
@@ -82,42 +103,23 @@ log_level Singleton_Logger::getDebugLevel(){
 }
 
 void Singleton_Logger::printOnScreen(){
-    std::cout<<"\n"<<"----------------END---------------"<<std::endl;
+    std::cout<<"\n"<<"-------------------------------------"<<std::endl;
 }
 
 template<typename T,typename... Ts>
 void Singleton_Logger::printOnScreen(T first, Ts... rest){
 
-
-    if(this->_DEBUG_LEVEL<=log_level::FATAL){// Going for Debug level
-        std::cout<<first<<" ";
-        printOnScreen(rest...);
-
-    }
-
-    else if(this->_DEBUG_LEVEL<=log_level::ERROR){// Going for Debug level
-        std::cout<<first<<" ";
-        printOnScreen(rest...);
-
-    }
-
-    else if(this->_DEBUG_LEVEL<=log_level::WARNING){// Going for Debug level
-        std::cout<<first<<" ";
-        printOnScreen(rest...);
-
-    }
-
-    else if(this->_DEBUG_LEVEL<=log_level::DEBUG){// Going for Debug level
-        std::cout<<first<<" ";
-        printOnScreen(rest...);
-
-    }
-
-    else if(this->_DEBUG_LEVEL<=log_level::INFO){// Going for Debug level
-        std::cout<<first<<" ";
-        printOnScreen(rest...);
-
-    }
+    std::cout<<first<<" ";
+    printOnScreen(rest...);
 }
 
+
+template<typename T,typename... Ts>
+void Singleton_Logger::print(log_level print_level,T first, Ts... rest){
+
+    if(this->_DEBUG_LEVEL>=print_level){
+        std::cout<<"{"<<print_level<<"}: ";
+        printOnScreen(first,rest...);
+    }
+}
 #endif
