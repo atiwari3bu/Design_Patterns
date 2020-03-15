@@ -1,13 +1,18 @@
-all:./bin/main
-	././bin/main
+file_input1 = ./test/courseInfo.txt
+file_input2 = ./test/student_coursePrefs.txt
 
-./bin/main:./src/logger.hpp ./src/main.cpp
-	#/usr/bin/g++ -std=c++14 ./src/logger.cpp ./src/main.cpp -o ./bin/main
+all:./bin/main
+	././bin/main $(file_input1) $(file_input2)
+
+./bin/main:./src/logger.hpp ./src/main.cpp ./bin/courseInfo
 	/usr/bin/g++ -std=c++14 -stdlib=libc++ ./src/main.cpp -o ./bin/main
 
+./bin/courseInfo:./src/courseInfo.hpp ./src/courseInfo.cpp
+	/usr/bin/g++ -std=c++14 -stdlib=libc++ ./src/courseInfo.cpp -c ./bin/courseInfo.o
+
 clean:
-	rm ./src/.*
-	rm /bin/main
+	rm ./bin/main 2> /dev/null
+	rm ./src/.* 2> /dev/null
 
 open:
 	vim ./src/main.cpp

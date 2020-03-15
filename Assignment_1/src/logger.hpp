@@ -8,11 +8,9 @@
 
 
 enum log_level{
-    FATAL,
     ERROR,
-    WARNING,
-    INFO,
-    DEBUG 
+    DEBUG,
+    INFO
 };
 
 class Singleton_Logger{
@@ -45,11 +43,9 @@ std::ostream& operator<<(std::ostream& os,const log_level& value){
     static std::unordered_map<log_level,std::string> mp;
 
     if(mp.size()==0){
-        mp[FATAL]="FATAL";
         mp[ERROR]="ERROR";
-        mp[WARNING]="WARNING";
-        mp[INFO]="INFO";
         mp[DEBUG]="DEBUG";
+        mp[INFO]="INFO";
     }
 
     os<<mp[value];
