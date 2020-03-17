@@ -37,7 +37,7 @@ class Singleton_Logger{
 
 };
 
-Singleton_Logger* Singleton_Logger::_Instance=nullptr;
+extern Singleton_Logger* Singleton_Logger::_Instance=nullptr;
 
 std::ostream& operator<<(std::ostream& os,const log_level& value){
     static std::unordered_map<log_level,std::string> mp;

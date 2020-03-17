@@ -22,7 +22,7 @@ bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Log
 }
 
 int main(int argc, char* argv[]){
-    Singleton_Logger* logger =  Singleton_Logger::getInstance(DEBUG); 
+    extern Singleton_Logger* logger =  Singleton_Logger::getInstance(INFO); 
     logger->print(DEBUG,"argc",argc);
     
     if(argc!=3){

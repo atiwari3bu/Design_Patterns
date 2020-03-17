@@ -4,14 +4,14 @@ file_input2 = ./test/student_coursePrefs.txt
 all:./bin/main
 	././bin/main $(file_input1) $(file_input2)
 
-./bin/main:./src/logger.hpp ./src/main.cpp ./bin/courseInfo
-	/usr/bin/g++ -std=c++14 -stdlib=libc++ ./src/main.cpp -o ./bin/main
+./bin/main:./src/logger.hpp ./src/main.cpp ./bin/courseInfo.o
+	/usr/bin/g++ -std=c++14 -stdlib=libc++ ./src/main.cpp ./bin/courseInfo.o -o ./bin/main
 
-./bin/courseInfo:./src/courseInfo.hpp ./src/courseInfo.cpp
-	/usr/bin/g++ -std=c++14 -stdlib=libc++ ./src/courseInfo.cpp -c ./bin/courseInfo.o
+./bin/courseInfo.o:./src/courseInfo.hpp ./src/courseInfo.cpp
+	/usr/bin/g++ -std=c++14 -stdlib=libc++ -c ./src/courseInfo.cpp -o ./bin/courseInfo.o
 
 clean:
-	rm ./bin/main 2> /dev/null
+	rm ./bin/* 2> /dev/null
 	rm ./src/.* 2> /dev/null
 
 open:
