@@ -1,10 +1,11 @@
 #include <fstream>
 #include <sstream>
 #include "logger.hpp"
+#include "logger.cpp"
 #include "courseInfo.hpp"
 
 bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Logger* logger){
-    logger->print(DEBUG,"populatingCourseInfoInObject",filename);
+    logger->print(DEBUG,"populatingCourseInfoInObject : ",filename);
 
     std::ifstream infile(filename);
     std:: string line;
@@ -22,7 +23,7 @@ bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Log
 }
 
 int main(int argc, char* argv[]){
-    extern Singleton_Logger* logger =  Singleton_Logger::getInstance(INFO); 
+    Singleton_Logger* logger =  Singleton_Logger::getInstance(INFO); 
     logger->print(DEBUG,"argc",argc);
     
     if(argc!=3){

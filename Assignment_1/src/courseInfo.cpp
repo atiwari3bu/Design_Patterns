@@ -1,25 +1,12 @@
 #include "courseInfo.hpp"
 #include "logger.hpp"
 
+Singleton_Logger* class_logger= Singleton_Logger::getInstance(INFO);
 
-bool insertIntoMap(std::string& input_string){
+bool courseInfo::insertIntoMap(std::string& input_string){
 
-    logger->print(DEBUG,"Is it working");
-    
-    std::string::size_type pos1 = input_string.find('-');
-
-    if(pos1!= std::string::npos){
-        std::string class_name=input_string.substr(0,pos1);
-    }
-    else return true;
-
-    std::string::size_type pos2 = input_string.find(':');
-    std::string::size_type pos3 = input_string.find(';');
-
-    if(pos2!= std::string::npos || pos3!= std::string::npos){
-        unsigned int capacity = stoi(input_string.substr(pos2,pos3));
-    }
-    else return true;
-               
+    class_logger->print(INFO,"printing this ");
+    //class_logger->print(DEBUG,"courseInfo::insertIntoMap ","params: ",input_string);
     return false;
+    
 }
