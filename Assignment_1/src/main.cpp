@@ -3,6 +3,25 @@
 #include "logger.hpp"
 #include "logger.cpp"
 #include "courseInfo.hpp"
+#include "studentInfo.hpp"
+
+bool populatingStudentInfoInObject(studentInfo* studentInfo, char* filename, Singleton_Logger* logger){
+    logger->print(DEBUG,"populatingStudentInfoInObject: ",filename);
+
+    std::ifstream infile(filename);
+    std:: string line;
+
+    while(std::getline(infile,line)){
+        logger->print(INFO,line);
+
+        if(studentInfo->insertInfoOfStudent(line)){
+            logger->print(ERROR,"PARSE ERROR");
+            return true;
+        }
+    }
+
+    return false;
+}
 
 bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Logger* logger){
     logger->print(DEBUG,"populatingCourseInfoInObject : ",filename);
@@ -19,6 +38,8 @@ bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Log
         }
     }
 
+    logger->print(DEBUG,info->getInfo());
+
     return false;
 }
 
@@ -34,7 +55,14 @@ int main(int argc, char* argv[]){
     courseInfo* info = new courseInfo();
     
     if(populatingCourseInfoInObject(info,argv[1],logger)){
-        logger->print(ERROR,"CourseInfo file is corrupted. Please see usage");
+        logger->print(ERROR,"CourseInfo file is corrupted. Please see usage at doc/Assignment1.pdf");
+        return 0;
+    }
+
+    studentInfo* student_info = new studentInfo();
+
+    if(populatingStudentInfoInObject(student_info,argv[2],logger)){
+        logger->print(ERROR, "StudentInfo file is corrupted. Please see usage at doc/Assignment1.pdf");
         return 0;
     }
 

@@ -10,5 +10,6 @@ class courseInfo{
 
     public:
     bool insertIntoMap(std::string& input_string);
+    std::unordered_map<std::string,std::pair<unsigned int,unsigned int>>& getInfo(); 
 };
 #endif

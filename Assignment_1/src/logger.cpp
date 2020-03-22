@@ -2,6 +2,26 @@
 
 Singleton_Logger* Singleton_Logger::_Instance=nullptr;
 
+template<typename T1,typename T2, typename T3>
+std::ostream& operator<<(std::ostream& os,const std::unordered_map<T1,std::pair<T2,T3>>& mp){
+    os<<"[";
+
+    for(auto iter = mp.begin();iter!=mp.end();++iter){
+        os<<"{";
+        os<<iter->first;
+        os<<"-";
+        os<<"(";
+        os<<iter->second.first;
+        os<<", ";
+        os<<iter->second.second;
+        os<<")";
+        os<<"} ";
+    }
+
+    os<<"] ";
+    return os;
+}
+
 std::ostream& operator<<(std::ostream& os,const log_level& value){
     static std::unordered_map<log_level,std::string> mp;
 
