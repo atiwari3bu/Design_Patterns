@@ -1,6 +1,22 @@
 #include "studentInfo.hpp"
 #include <iostream>
 
+std::vector<std::string>& student::getCourses(){
+    return this->courses;
+}
+
+student_level& student::getStudent_level(){
+    return this->level;
+}
+
+std::string& student::getId(){
+    return this->id;
+}
+
+std::vector<student*>& studentInfo::getStudentInfo(){
+    return this->students;
+}
+
 bool studentInfo::insertInfoOfStudent(std::string& line){
 
     size_t first_space = line.find(' ');

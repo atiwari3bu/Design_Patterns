@@ -20,12 +20,19 @@ class student{
     level(level),
     courses(courses){}
 
+    std::vector<std::string>& getCourses();
+    student_level& getStudent_level();
+    std::string& getId();
+
 };
 
 class studentInfo{
     std::vector<student*> students;
+
     public:
     bool insertInfoOfStudent(std::string& line);
+    std::vector<student*>& getStudentInfo();
+
 };
 
 #endif

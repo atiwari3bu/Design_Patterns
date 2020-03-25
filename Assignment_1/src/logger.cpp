@@ -1,4 +1,5 @@
 #include "logger.hpp"
+#include "studentInfo.hpp"
 
 Singleton_Logger* Singleton_Logger::_Instance=nullptr;
 
@@ -19,6 +20,19 @@ std::ostream& operator<<(std::ostream& os,const std::unordered_map<T1,std::pair<
     }
 
     os<<"] ";
+    return os;
+}
+
+std::ostream& operator<<(std::ostream& os,const student_level& value){
+    static std::unordered_map<student_level,std::string> mp;
+
+    if(mp.size()==0){
+        mp[FIRST_YEAR]="FIRST_YEAR";
+        mp[SECOND_YEAR]="SECOND_YEAR";
+        mp[THIRD_YEAR]="THIRD_YEAR";
+    }
+
+    os<<mp[value];
     return os;
 }
 

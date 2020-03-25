@@ -20,6 +20,11 @@ bool populatingStudentInfoInObject(studentInfo* studentInfo, char* filename, Sin
         }
     }
 
+    std::vector<student*> students = studentInfo->getStudentInfo();
+    for(int i=0;i<students.size();++i){
+        logger->print(DEBUG,students[i]->getId(),students[i]->getCourses(),students[i]->getStudent_level());
+    }
+
     return false;
 }
 
@@ -44,7 +49,7 @@ bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Log
 }
 
 int main(int argc, char* argv[]){
-    Singleton_Logger* logger =  Singleton_Logger::getInstance(INFO); 
+    Singleton_Logger* logger =  Singleton_Logger::getInstance(DEBUG); 
     logger->print(DEBUG,"argc",argc);
     
     if(argc!=3){
