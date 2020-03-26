@@ -5,6 +5,9 @@
 #include "courseInfo.hpp"
 #include "studentInfo.hpp"
 
+void populatingCoursesIntoStudents(courseInfo* course_info,studentInfo* student_info,Singleton_Logger* logger){
+}
+
 bool populatingStudentInfoInObject(studentInfo* studentInfo, char* filename, Singleton_Logger* logger){
     logger->print(DEBUG,"populatingStudentInfoInObject: ",filename);
 
@@ -70,6 +73,8 @@ int main(int argc, char* argv[]){
         logger->print(ERROR, "StudentInfo file is corrupted. Please see usage at doc/Assignment1.pdf");
         return 0;
     }
+
+    populatingCoursesIntoStudents(info,student_info,logger);
 
     return 0;
 }

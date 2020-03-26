@@ -1,7 +1,42 @@
 #include "studentInfo.hpp"
 #include <iostream>
 
-std::vector<std::string>& student::getCourses(){
+bool student::is_Time_Available(unsigned int time){
+    if(((alloted_times).find(time))==(alloted_times).end()){
+        return true;
+    }
+
+    else return false;
+}
+
+bool student::allot_Time(unsigned int time){
+    if(is_Time_Available(time)){
+        (alloted_times).insert(time);
+        return true;
+    }
+
+    else return false;
+}
+
+bool student::is_Course_Available(std::string course){
+    if(((alloted_courses).find(course))==(alloted_courses).end()){
+        return true;
+    }
+
+    else return false;
+
+}
+
+bool student::allot_course(std::string course){
+    if(is_Course_Available(course)){
+        (alloted_courses).insert(course);
+        return true;
+    }
+
+    else return false;
+}
+
+std::unordered_set<std::string>& student::getCourses(){
     return this->courses;
 }
 
@@ -24,12 +59,12 @@ bool studentInfo::insertInfoOfStudent(std::string& line){
 
     std::string id(line.begin(),line.begin()+first_space);
 
-    std::vector<std::string> courses;
+    std::unordered_set<std::string> courses;
     std::string buffer;
 
     for(int i = first_space+1; line[i]!=';'; ++i){
         if(line[i]==','){ 
-            courses.push_back(buffer);
+            courses.insert(buffer);
             ++i; // removing the space as well
             buffer.clear();
         }
@@ -37,9 +72,9 @@ bool studentInfo::insertInfoOfStudent(std::string& line){
         buffer+=line[i];
     }
 
-    courses.push_back(buffer);
+    courses.insert(buffer);
     buffer.clear();
-    
+
 
     size_t first_colon = line.find(':');
     buffer = std::string(line.begin()+first_colon+2,line.end());
@@ -52,6 +87,6 @@ bool studentInfo::insertInfoOfStudent(std::string& line){
     else return true;
 
     this->students.push_back(new student(id,level,courses));
-    
+
     return false;
 }

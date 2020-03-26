@@ -2,6 +2,7 @@
 #define __STUDENTINFO_HPP__
 
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 enum student_level{
@@ -13,16 +14,24 @@ enum student_level{
 class student{
     std::string id;
     student_level level;
-    std::vector<std::string> courses;
+    std::unordered_set<std::string> courses;
+    std::unordered_set<std::string> alloted_courses;
+    std::unordered_set<unsigned int> alloted_times;
 
     public:
-    student(std::string id,student_level level,std::vector<std::string>courses):id(id.begin(),id.end()) ,
+    student(std::string id,student_level level,std::unordered_set<std::string> courses):id(id.begin(),id.end()) ,
     level(level),
     courses(courses){}
 
-    std::vector<std::string>& getCourses();
+    std::unordered_set<std::string>& getCourses();
     student_level& getStudent_level();
     std::string& getId();
+
+    bool allot_Time(unsigned int time);
+    bool is_Time_Available(unsigned int time);
+
+    bool allot_course(std::string course);
+    bool is_Course_Available(std::string course);
 
 };
 
