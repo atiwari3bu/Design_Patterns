@@ -86,6 +86,7 @@ void populatingCoursesIntoStudents(courseInfo* course_info,studentInfo* student_
         }
     }
 
+
 }
 
 bool populatingStudentInfoInObject(studentInfo* studentInfo, char* filename, Singleton_Logger* logger){
