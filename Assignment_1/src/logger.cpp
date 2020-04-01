@@ -51,10 +51,10 @@ std::ostream& operator<<(std::ostream& os,const log_level& value){
 
 template<typename T> // operator overloading for unorderd_set 
 std::ostream& operator <<(std::ostream& os,const std::unordered_set<T>& v){ 
-    os<<"[";
+    os<<"[ ";
 
     for(auto iter = v.begin();iter!=v.end();++iter){
-        os<<*iter;
+        os<<*iter<<" ";
 
     }
 

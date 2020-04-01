@@ -5,7 +5,87 @@
 #include "courseInfo.hpp"
 #include "studentInfo.hpp"
 
+#define MAX_ALLOWED_COURSES 3
+#define MAX_ENTRY_FOR_COURSES 6
+
 void populatingCoursesIntoStudents(courseInfo* course_info,studentInfo* student_info,Singleton_Logger* logger){
+
+    // Assigning E and F to third year students first
+    std::vector<student*> students = student_info->getStudentInfo();
+    for(int i=0;i<students.size();++i){
+
+        if(students[i]->getStudent_level()==THIRD_YEAR){
+
+            if(((students[i]->getCourses()).find("E"))!=((students[i]->getCourses()).end())){
+
+                if(course_info->allotStudentToCourse("E")){
+
+                    if(students[i]->allot_course("E") && students[i]->allot_Time(course_info->getTimeOfCourse("E"))){
+                        logger->print(INFO,students[i]->getId(), "Course Alloted E");
+                    }
+                }        
+            }
+
+            if(students[i]->getCourses().find("F")!=students[i]->getCourses().end()){
+
+                if(course_info->allotStudentToCourse("F")){
+
+                    if(students[i]->allot_course("F") && students[i]->allot_Time(course_info->getTimeOfCourse("F"))){
+                        logger->print(INFO,students[i]->getId(), "Course Alloted F");
+                    }
+                }        
+            }
+
+        }
+    }
+
+    // Assigning E and F to second year students second
+    for(int i=0;i<students.size();++i){
+
+        if(students[i]->getStudent_level()==SECOND_YEAR){
+
+            if(students[i]->getCourses().find("E")!=students[i]->getCourses().end()){
+
+                if(course_info->allotStudentToCourse("E")){
+
+                    if(students[i]->allot_course("E") && students[i]->allot_Time(course_info->getTimeOfCourse("E"))){
+                        logger->print(INFO,students[i]->getId(), "Course Alloted E");
+                    }
+                }        
+            }
+
+        }
+
+        if(students[i]->getStudent_level()==SECOND_YEAR){
+
+            if(students[i]->getCourses().find("F")!=students[i]->getCourses().end()){
+
+                if(course_info->allotStudentToCourse("F")){
+
+                    if(students[i]->allot_course("F") && students[i]->allot_Time(course_info->getTimeOfCourse("F"))){
+                        logger->print(INFO,students[i]->getId(), "Course Alloted F");
+                    }
+                }        
+            }
+
+        }
+    }
+
+    // Assigning the courses serially to all the students now
+
+    /* Considering the input has atleast one entry and students are supposed to have atleast 6 subjects in their choices */
+    for(int i = 0;i < MAX_ALLOWED_COURSES;++i){
+
+        for(int j=0;j<students.size();++j){
+            auto course =*((students[j]->getCourses()).begin());
+
+            if(course_info->allotStudentToCourse(course) && students[j]->allot_course(course) && students[j]->allot_Time(course_info->getTimeOfCourse(course))){
+                logger->print(INFO,students[j]->getId(), "Course Alloted ",course);
+            }
+            students[j]->removeCourse(course);
+        }
+    }
+
 }
 
 bool populatingStudentInfoInObject(studentInfo* studentInfo, char* filename, Singleton_Logger* logger){
@@ -52,16 +132,16 @@ bool populatingCourseInfoInObject(courseInfo* info, char* filename,Singleton_Log
 }
 
 int main(int argc, char* argv[]){
-    Singleton_Logger* logger =  Singleton_Logger::getInstance(DEBUG); 
+    Singleton_Logger* logger =  Singleton_Logger::getInstance(INFO); 
     logger->print(DEBUG,"argc",argc);
-    
+
     if(argc!=3){
         logger->print(ERROR,"Incorrect number of arguments");
         return 0;
     }
 
     courseInfo* info = new courseInfo();
-    
+
     if(populatingCourseInfoInObject(info,argv[1],logger)){
         logger->print(ERROR,"CourseInfo file is corrupted. Please see usage at doc/Assignment1.pdf");
         return 0;

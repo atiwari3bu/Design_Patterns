@@ -33,6 +33,9 @@ class student{
     bool allot_course(std::string course);
     bool is_Course_Available(std::string course);
 
+    size_t totalCoursesAlloted();
+    void removeCourse(std::string course);
+
 };
 
 class studentInfo{

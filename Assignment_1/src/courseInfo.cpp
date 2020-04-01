@@ -6,6 +6,27 @@ std::unordered_map<std::string,std::pair<unsigned int,unsigned int>>& courseInfo
     return this->Info;
 }
 
+bool courseInfo::isSpaceAvailable(std::string course){
+    if((this->Info)[course].first > 0){
+        return true;
+    }
+
+    return false;
+}
+
+bool courseInfo::allotStudentToCourse(std::string course){
+    if(courseInfo::isSpaceAvailable(course)){
+        (this->Info)[course].first--;
+        return true;
+    }
+
+    return false;
+}
+
+unsigned int courseInfo::getTimeOfCourse(std::string course){
+    return (this->Info)[course].second;
+}
+
 bool courseInfo::insertIntoMap(std::string& input_string){
 
     size_t first_dash = input_string.find('-');

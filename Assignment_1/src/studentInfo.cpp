@@ -1,6 +1,14 @@
 #include "studentInfo.hpp"
 #include <iostream>
 
+void student::removeCourse(std::string course){
+    (this->courses).erase((this->courses).find(course));
+}
+
+size_t student::totalCoursesAlloted(){
+    return (this->alloted_courses).size();
+}
+
 bool student::is_Time_Available(unsigned int time){
     if(((alloted_times).find(time))==(alloted_times).end()){
         return true;
@@ -69,7 +77,9 @@ bool studentInfo::insertInfoOfStudent(std::string& line){
             buffer.clear();
         }
 
-        buffer+=line[i];
+        else{
+            buffer+=line[i];
+        }
     }
 
     courses.insert(buffer);

@@ -4,7 +4,7 @@ file_input2 = ./test/student_coursePrefs.txt
 all:./bin/main
 	././bin/main $(file_input1) $(file_input2)
 
-./bin/main:./src/logger.hpp ./src/main.cpp ./bin/courseInfo.o ./bin/studentInfo.o
+./bin/main:./src/logger.hpp ./src/logger.cpp ./src/main.cpp ./bin/courseInfo.o ./bin/studentInfo.o
 	/usr/bin/g++ -std=c++14 -stdlib=libc++ ./src/main.cpp ./bin/courseInfo.o ./bin/studentInfo.o -o ./bin/main
 
 ./bin/courseInfo.o:./src/courseInfo.hpp ./src/courseInfo.cpp
