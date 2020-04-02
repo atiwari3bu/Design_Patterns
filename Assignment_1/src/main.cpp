@@ -5,8 +5,6 @@
 #include "courseInfo.hpp"
 #include "studentInfo.hpp"
 
-#define MAX_ALLOWED_COURSES 3
-#define MAX_ENTRY_FOR_COURSES 6
 
 void populatingCoursesIntoStudents(courseInfo* course_info,studentInfo* student_info,Singleton_Logger* logger){
 
@@ -74,15 +72,14 @@ void populatingCoursesIntoStudents(courseInfo* course_info,studentInfo* student_
     // Assigning the courses serially to all the students now
 
     /* Considering the input has atleast one entry and students are supposed to have atleast 6 subjects in their choices */
-    for(int i = 0;i < MAX_ALLOWED_COURSES;++i){
+    for(int i = 0;i < (students[0]->getPreferenceCourses()).size();++i){
 
         for(int j=0;j<students.size();++j){
-            auto course =*((students[j]->getCourses()).begin());
+            auto course = (students[j]->getPreferenceCourses())[i];
 
             if(course_info->allotStudentToCourse(course) && students[j]->allot_course(course) && students[j]->allot_Time(course_info->getTimeOfCourse(course))){
-                logger->print(INFO,students[j]->getId(), "Course Alloted ",course);
+                logger->print(INFO,students[j]->getId(), "Course Alloted ",course,students[j]->getAllotedCourses());
             }
-            students[j]->removeCourse(course);
         }
     }
 

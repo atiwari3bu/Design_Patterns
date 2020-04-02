@@ -36,12 +36,20 @@ bool student::is_Course_Available(std::string course){
 }
 
 bool student::allot_course(std::string course){
-    if(is_Course_Available(course)){
+    if(is_Course_Available(course) && (alloted_courses.size())< MAX_ALLOWED_COURSES){
         (alloted_courses).insert(course);
         return true;
     }
 
     else return false;
+}
+
+std::unordered_set<std::string>& student::getAllotedCourses(){
+    return this->alloted_courses;
+}
+
+std::vector<std::string>& student::getPreferenceCourses(){
+    return this->preference_courses;
 }
 
 std::unordered_set<std::string>& student::getCourses(){
@@ -68,11 +76,13 @@ bool studentInfo::insertInfoOfStudent(std::string& line){
     std::string id(line.begin(),line.begin()+first_space);
 
     std::unordered_set<std::string> courses;
+    std::vector<std::string> preference_courses;
     std::string buffer;
 
     for(int i = first_space+1; line[i]!=';'; ++i){
         if(line[i]==','){ 
             courses.insert(buffer);
+            preference_courses.push_back(buffer);
             ++i; // removing the space as well
             buffer.clear();
         }
@@ -96,7 +106,7 @@ bool studentInfo::insertInfoOfStudent(std::string& line){
     else if(buffer=="THIRD_YEAR") level = THIRD_YEAR;
     else return true;
 
-    this->students.push_back(new student(id,level,courses));
+    this->students.push_back(new student(id,level,courses,preference_courses));
 
     return false;
 }
