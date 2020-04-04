@@ -6,6 +6,34 @@
 #include "studentInfo.hpp"
 
 
+bool writingResultInFile(studentInfo* student_info,Singleton_Logger* logger){
+
+    std::vector<student*> students = student_info->getStudentInfo();
+
+    std::string output_file_name = "./doc/output.txt";
+    std::ofstream output_file(output_file_name);
+
+
+    for(int i = 0;i<students.size();++i){
+        output_file<<students[i]->getId()<<": ";
+
+        auto alloted_courses = students[i]->getAllotedCourses();
+
+        logger->print(INFO,alloted_courses);
+
+        while(alloted_courses.size()>1){
+            auto course = alloted_courses.begin();
+            output_file<<*course<<", ";
+            alloted_courses.erase(*course);
+        }
+
+        output_file<<*alloted_courses.begin()<<std::endl;
+    }
+    
+    return false;
+}
+
+
 void populatingCoursesIntoStudents(courseInfo* course_info,studentInfo* student_info,Singleton_Logger* logger){
 
     // Assigning E and F to third year students first
@@ -153,6 +181,10 @@ int main(int argc, char* argv[]){
     }
 
     populatingCoursesIntoStudents(info,student_info,logger);
+
+    if(writingResultInFile(student_info,logger)){
+        logger->print(ERROR, "Writing error");
+    }
 
     return 0;
 }
