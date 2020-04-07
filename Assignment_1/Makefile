@@ -17,6 +17,9 @@ clean:
 	rm ./bin/* 2> /dev/null
 	rm ./src/.* 2> /dev/null
 
+checkmem:
+	valgrind --leak-check=full ./bin/main ./bin/courseInfo.o ./bin/studentInfo.o
+
 open:
 	vim ./src/main.cpp
 
